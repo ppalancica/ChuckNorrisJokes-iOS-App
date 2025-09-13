@@ -2,13 +2,13 @@ import UIKit
 
 final class JokeViewController: UIViewController {
     
-    private let jokeLoader: RemoteJokeLoader!
+    private let jokeLoader: JokeLoader!
     
     var onJokeLoaded: (() -> Void)?
     
     @IBOutlet private weak var jokeTextView: UITextView!
     
-    static func storyboardedJokeVC(jokeLoader: RemoteJokeLoader,
+    static func storyboardedJokeVC(jokeLoader: JokeLoader,
                                    session: URLSession) -> JokeViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: .main)
         
@@ -21,7 +21,7 @@ final class JokeViewController: UIViewController {
         return jokeVC
     }
     
-    init?(jokeLoader: RemoteJokeLoader, session: URLSession, coder aDecoder: NSCoder) {
+    init?(jokeLoader: JokeLoader, session: URLSession, coder aDecoder: NSCoder) {
         self.jokeLoader = jokeLoader
         super.init(coder: aDecoder)
     }

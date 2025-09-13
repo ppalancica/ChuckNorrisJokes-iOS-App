@@ -12,6 +12,8 @@ protocol JokeLoader {
     typealias LoadJokeCompletion = (Result<Joke, JokeLoaderError>) -> Void
     
     func loadJoke(completion: @escaping LoadJokeCompletion)
+    
+    func cancelJokeLoad()
 }
 
 final class RemoteJokeLoader: JokeLoader {
