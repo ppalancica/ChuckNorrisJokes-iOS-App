@@ -6,23 +6,28 @@ struct Joke: Decodable {
 
 final class RemoteJokeLoader {
     
+    private let url: URL
     private let session: URLSession
     private var dataTask: URLSessionDataTask!
     
-    init(session: URLSession) {
+    init(url: URL = URL(string: "https://api.chucknorris.io/jokes/random")!,
+         session: URLSession) {
+        self.url = url
         self.session = session
     }
     
-    typealias LoadJokeCompletion = (Data?, URLResponse?, Error?) -> Void
+    typealias LoadJokeCompletion = (Data?, String?) -> Void
     
     func loadJoke(completion: @escaping LoadJokeCompletion) {
         dataTask?.cancel()
         
-        let url = URL(string: "https://api.chucknorris.io/jokes/random")!
         let request = URLRequest(url: url)
         
         dataTask = session.dataTask(with: request) { data, response, error in
-            completion(data, response, error)
+            self.handleResponse(data: data,
+                                response: response,
+                                error: error,
+                                completion: completion)
         }
         
         dataTask.resume()
@@ -30,6 +35,29 @@ final class RemoteJokeLoader {
     
     func cancelJokeLoad() {
         dataTask?.cancel()
+    }
+    
+    func handleResponse(data: Data?,
+                        response: URLResponse?,
+                        error: Error?,
+                        completion: @escaping LoadJokeCompletion) {
+        if let error {
+            completion(nil, error.localizedDescription)
+            return
+        }
+        
+        guard let response = response as? HTTPURLResponse,
+              (200..<300).contains(response.statusCode) else {
+            completion(data, "Invalid response")
+            return
+        }
+        
+        guard let data else {
+            completion(nil, "Invalid data")
+            return
+        }
+        
+        completion(data, nil)
     }
 }
 
@@ -74,35 +102,13 @@ final class JokeViewController: UIViewController {
     }
     
     @IBAction private func loadJokeTapped() {
-        jokeLoader.loadJoke(completion: handleResponse)
+        jokeLoader.loadJoke(completion: handleCompletion)
     }
 }
 
 private extension JokeViewController {
     
-    func handleResponse(_ data: Data?,
-                        _ response: URLResponse?,
-                        _ error: Error?) {
-        if let error {
-            self.handleCompletion(error: error.localizedDescription, data: nil)
-            return
-        }
-        
-        guard let response = response as? HTTPURLResponse,
-              (200..<300).contains(response.statusCode) else {
-            self.handleCompletion(error: "Invalid response", data: data)
-            return
-        }
-        
-        guard let data else {
-            self.handleCompletion(error: "Invalid data", data: nil)
-            return
-        }
-        
-        self.handleCompletion(error: nil, data: data)
-    }
-    
-    func handleCompletion(error: String?, data: Data?) {
+    func handleCompletion(data: Data?, error: String?) {
         if let error {
             print("Error: ", error)
             DispatchQueue.main.async {
