@@ -51,7 +51,9 @@ final class ChuckNorrisJokes_iOS_App_Tests: XCTestCase {
     // MARK: - Helpers
     
     private func makeSUT() -> JokeViewController {
-        return JokeViewController.storyboardedJokeVC()
+        let session = URLSession(configuration: .ephemeral)
+        
+        return JokeViewController.storyboardedJokeVC(session: session)
     }
 }
 
