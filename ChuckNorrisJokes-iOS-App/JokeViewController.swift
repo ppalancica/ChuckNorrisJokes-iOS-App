@@ -58,6 +58,6 @@ extension JokeViewController: URLSessionDelegate {
         didReceive challenge: URLAuthenticationChallenge,
         completionHandler: @escaping @Sendable (URLSession.AuthChallengeDisposition, URLCredential?
         ) -> Void) {
-        // NOOP
+        completionHandler(URLSession.AuthChallengeDisposition.useCredential, nil)
     }
 }
