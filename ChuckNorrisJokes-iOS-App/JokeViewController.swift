@@ -41,11 +41,12 @@ final class JokeViewController: UIViewController {
     }
     
     @IBAction private func loadJokeTapped() {
-        jokeLoader.loadJoke { [weak self] joke in
+        jokeLoader.loadJoke { [weak self] result in
             guard let self else { return }
             DispatchQueue.main.async {
-                if let joke {
-                    self.jokeTextView.text = joke.value
+                switch result {
+                    case .success(let joke): self.jokeTextView.text = joke.value
+                    case .failure(let error): print(error.localizedDescription)
                 }
                 self.onJokeLoaded?()
             }

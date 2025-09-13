@@ -4,8 +4,12 @@ struct Joke: Decodable {
     let value: String
 }
 
+enum JokeLoaderError: Swift.Error {
+    case unknown(String)
+}
+
 protocol JokeLoader {
-    typealias LoadJokeCompletion = (Joke?) -> Void
+    typealias LoadJokeCompletion = (Result<Joke, JokeLoaderError>) -> Void
     
     func loadJoke(completion: @escaping LoadJokeCompletion)
 }
@@ -67,7 +71,7 @@ final class RemoteJokeLoader: JokeLoader {
                                   completion: @escaping LoadJokeCompletion) {
         if let error {
             print("Error: ", error)
-            completion(nil)
+            completion(.failure(.unknown("Could not load joke")))
             return
         }
         
@@ -75,10 +79,10 @@ final class RemoteJokeLoader: JokeLoader {
             do {
                 let joke = try JSONDecoder().decode(Joke.self, from: data)
                 print("Joke: ", joke)
-                completion(joke)
+                completion(.success(joke))
             } catch {
                 print("Error: ", error)
-                completion(nil)
+                completion(.failure(.unknown("Could not load joke")))
             }
         }
     }
