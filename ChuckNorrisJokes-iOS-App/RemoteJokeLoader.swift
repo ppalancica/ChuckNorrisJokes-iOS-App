@@ -5,7 +5,7 @@ struct Joke: Decodable {
 }
 
 protocol JokeLoader {
-    typealias LoadJokeCompletion = (String?) -> Void
+    typealias LoadJokeCompletion = (Joke?) -> Void
     
     func loadJoke(completion: @escaping LoadJokeCompletion)
 }
@@ -75,7 +75,7 @@ final class RemoteJokeLoader: JokeLoader {
             do {
                 let joke = try JSONDecoder().decode(Joke.self, from: data)
                 print("Joke: ", joke)
-                completion(joke.value)
+                completion(joke)
             } catch {
                 print("Error: ", error)
                 completion(nil)

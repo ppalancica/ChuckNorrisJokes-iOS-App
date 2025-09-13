@@ -45,7 +45,7 @@ final class JokeViewController: UIViewController {
             guard let self else { return }
             DispatchQueue.main.async {
                 if let joke {
-                    self.jokeTextView.text = joke
+                    self.jokeTextView.text = joke.value
                 }
                 self.onJokeLoaded?()
             }
