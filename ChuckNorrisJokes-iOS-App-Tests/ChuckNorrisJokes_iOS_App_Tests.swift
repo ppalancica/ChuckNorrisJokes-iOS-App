@@ -22,12 +22,13 @@ final class ChuckNorrisJokes_iOS_App_Tests: XCTestCase {
         
         let exp = expectation(description: "Wait for Joke loading to complete")
         sut.onJokeLoaded = { exp.fulfill() }
+        XCTAssertEqual(try sut.textView().text, "")
         
         try sut.loadJokeButton().sendActions(for: .touchUpInside)
         
         wait(for: [exp], timeout: 1.0)
         
-        XCTAssertNotEqual(try sut.textView().text, "")
+        XCTAssertFalse(try sut.textView().text.isEmpty)
     }
     
     // MARK: - Helpers
