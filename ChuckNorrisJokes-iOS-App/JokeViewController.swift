@@ -4,26 +4,35 @@ struct Joke: Decodable {
     let value: String
 }
 
+final class RemoteJokeLoader {
+    
+}
+
 final class JokeViewController: UIViewController {
     
-    private var session: URLSession!
+    private var jokeLoader: RemoteJokeLoader!
+    private let session: URLSession!
     private var dataTask: URLSessionDataTask!
     
     var onJokeLoaded: (() -> Void)?
     
     @IBOutlet private weak var jokeTextView: UITextView!
     
-    static func storyboardedJokeVC(session: URLSession) -> JokeViewController {
+    static func storyboardedJokeVC(jokeLoader: RemoteJokeLoader,
+                                   session: URLSession) -> JokeViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: .main)
         
         let jokeVC = storyboard.instantiateViewController(identifier: "JokeViewController") { coder in
-            JokeViewController(session: session, coder: coder)
+            JokeViewController(jokeLoader: jokeLoader,
+                               session: session,
+                               coder: coder)
         }
         
         return jokeVC
     }
     
-    init?(session: URLSession, coder aDecoder: NSCoder) {
+    init?(jokeLoader: RemoteJokeLoader, session: URLSession, coder aDecoder: NSCoder) {
+        self.jokeLoader = jokeLoader
         self.session = session
         super.init(coder: aDecoder)
     }
