@@ -7,6 +7,14 @@ final class ChuckNorrisJokes_iOS_App_Tests: XCTestCase {
         let _ = makeSUT()
     }
     
+    func test_viewDidLoad_startsWithEmptyTextView() throws {
+        let sut = makeSUT()
+        
+        sut.loadViewIfNeeded()
+        
+        XCTAssertEqual(try sut.textView().text, "")
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT() -> JokeViewController {
@@ -14,5 +22,16 @@ final class ChuckNorrisJokes_iOS_App_Tests: XCTestCase {
         let jokeVC = storyboard.instantiateInitialViewController() as! JokeViewController
         
         return jokeVC
+    }
+}
+
+private extension JokeViewController {
+    
+    func textView() throws -> UITextView {
+        let firstSubview = view.subviews.first(
+            where: { $0 is UITextView }   
+        )
+        
+        return try XCTUnwrap(firstSubview as? UITextView)
     }
 }
