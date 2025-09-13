@@ -54,8 +54,7 @@ final class ChuckNorrisJokes_iOS_App_Tests: XCTestCase {
         let session = URLSession(configuration: .ephemeral)
         let jokeLoader = RemoteJokeLoader(session: session)
         
-        let jokeVC = JokeViewController.storyboardedJokeVC(jokeLoader: jokeLoader,
-                                                           session: session)
+        let jokeVC = JokeViewController.storyboardedJokeVC(jokeLoader: jokeLoader)
         
         return (jokeVC, jokeLoader)
     }

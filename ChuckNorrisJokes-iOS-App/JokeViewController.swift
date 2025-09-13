@@ -8,20 +8,18 @@ final class JokeViewController: UIViewController {
     
     @IBOutlet private weak var jokeTextView: UITextView!
     
-    static func storyboardedJokeVC(jokeLoader: JokeLoader,
-                                   session: URLSession) -> JokeViewController {
+    static func storyboardedJokeVC(jokeLoader: JokeLoader) -> JokeViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: .main)
         
         let jokeVC = storyboard.instantiateViewController(identifier: "JokeViewController") { coder in
             JokeViewController(jokeLoader: jokeLoader,
-                               session: session,
                                coder: coder)
         }
         
         return jokeVC
     }
     
-    init?(jokeLoader: JokeLoader, session: URLSession, coder aDecoder: NSCoder) {
+    init?(jokeLoader: JokeLoader, coder aDecoder: NSCoder) {
         self.jokeLoader = jokeLoader
         super.init(coder: aDecoder)
     }
