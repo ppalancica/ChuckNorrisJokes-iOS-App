@@ -8,7 +8,9 @@ final class JokeViewController: UIViewController {
     
     private var session: URLSession!
     private var dataTask: URLSessionDataTask!
-
+    
+    var onJokeLoaded: (() -> Void)?
+    
     @IBOutlet private weak var jokeTextView: UITextView!
     
     override func viewDidLoad() {
@@ -67,6 +69,7 @@ private extension JokeViewController {
                 
                 DispatchQueue.main.async {
                     self.jokeTextView.text = joke.value
+                    self.onJokeLoaded?()
                 }
             } catch {
                 print("Error: ", error)

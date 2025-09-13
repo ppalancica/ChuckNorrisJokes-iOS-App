@@ -15,6 +15,21 @@ final class ChuckNorrisJokes_iOS_App_Tests: XCTestCase {
         XCTAssertEqual(try sut.textView().text, "")
     }
     
+    func test_loadJokeTapped_loadsJokeToTextView() throws {
+        let sut = makeSUT()
+        
+        sut.loadViewIfNeeded()
+        
+        let exp = expectation(description: "Wait for Joke loading to complete")
+        sut.onJokeLoaded = { exp.fulfill() }
+        
+        try sut.loadJokeButton().sendActions(for: .touchUpInside)
+        
+        wait(for: [exp], timeout: 1.0)
+        
+        XCTAssertNotEqual(try sut.textView().text, "")
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT() -> JokeViewController {
@@ -29,9 +44,17 @@ private extension JokeViewController {
     
     func textView() throws -> UITextView {
         let firstSubview = view.subviews.first(
-            where: { $0 is UITextView }   
+            where: { $0 is UITextView }
         )
         
         return try XCTUnwrap(firstSubview as? UITextView)
+    }
+    
+    func loadJokeButton() throws -> UIButton {
+        let firstSubview = view.subviews.first(
+            where: { $0 is UIButton }
+        )
+        
+        return try XCTUnwrap(firstSubview as? UIButton)
     }
 }
