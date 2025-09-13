@@ -41,32 +41,13 @@ final class JokeViewController: UIViewController {
     }
     
     @IBAction private func loadJokeTapped() {
-        jokeLoader.loadJoke(completion: handleCompletion)
-    }
-}
-
-private extension JokeViewController {
-    
-    func handleCompletion(data: Data?, error: String?) {
-        if let error {
-            print("Error: ", error)
+        jokeLoader.loadJoke { [weak self] joke in
+            guard let self else { return }
             DispatchQueue.main.async {
-                self.onJokeLoaded?()
-            }
-            return
-        }
-        
-        if let data {
-            do {
-                let joke = try JSONDecoder().decode(Joke.self, from: data)
-                print("Joke: ", joke)
-                
-                DispatchQueue.main.async {
-                    self.jokeTextView.text = joke.value
-                    self.onJokeLoaded?()
+                if let joke {
+                    self.jokeTextView.text = joke
                 }
-            } catch {
-                print("Error: ", error)
+                self.onJokeLoaded?()
             }
         }
     }
