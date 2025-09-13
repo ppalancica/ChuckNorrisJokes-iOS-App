@@ -4,11 +4,11 @@ import XCTest
 final class ChuckNorrisJokes_iOS_App_Tests: XCTestCase {
     
     func test_init_doesNotCrash() {
-        let _ = makeSUT()
+        let (_, _) = makeSUT()
     }
     
     func test_viewDidLoad_startsWithEmptyTextView() throws {
-        let sut = makeSUT()
+        let (sut, _) = makeSUT()
         
         sut.loadViewIfNeeded()
         
@@ -16,7 +16,7 @@ final class ChuckNorrisJokes_iOS_App_Tests: XCTestCase {
     }
     
     func test_loadJokeTapped_loadsJokeToTextView() throws {
-        let sut = makeSUT()
+        let (sut, _) = makeSUT()
         
         sut.loadViewIfNeeded()
         
@@ -32,7 +32,7 @@ final class ChuckNorrisJokes_iOS_App_Tests: XCTestCase {
     }
     
     func test_loadJokeTapped_onCancel_doesNotChangeTextViewText() throws {
-        let sut = makeSUT()
+        let (sut, jokeLoader) = makeSUT()
         
         sut.loadViewIfNeeded()
         
@@ -41,7 +41,7 @@ final class ChuckNorrisJokes_iOS_App_Tests: XCTestCase {
         XCTAssertEqual(try sut.textView().text, "")
         
         try sut.loadJokeButton().sendActions(for: .touchUpInside)
-        sut.cancelJokeLoad()
+        jokeLoader.cancelJokeLoad()
         
         wait(for: [exp], timeout: 1.0)
         
@@ -50,12 +50,14 @@ final class ChuckNorrisJokes_iOS_App_Tests: XCTestCase {
     
     // MARK: - Helpers
     
-    private func makeSUT() -> JokeViewController {
+    private func makeSUT() -> (JokeViewController, RemoteJokeLoader) {
         let session = URLSession(configuration: .ephemeral)
         let jokeLoader = RemoteJokeLoader(session: session)
         
-        return JokeViewController.storyboardedJokeVC(jokeLoader: jokeLoader,
-                                                     session: session)
+        let jokeVC = JokeViewController.storyboardedJokeVC(jokeLoader: jokeLoader,
+                                                           session: session)
+        
+        return (jokeVC, jokeLoader)
     }
 }
 
