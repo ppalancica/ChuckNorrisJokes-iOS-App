@@ -5,7 +5,9 @@ struct Joke: Decodable {
 }
 
 enum JokeLoaderError: Swift.Error {
-    case unknown(String)
+    case genericError(String)
+    case decodingError(String)
+    case unknownError(String)
 }
 
 protocol JokeLoader {
@@ -73,19 +75,18 @@ final class RemoteJokeLoader: JokeLoader {
                                   completion: @escaping LoadJokeCompletion) {
         if let error {
             print("Error: ", error)
-            completion(.failure(.unknown("Could not load joke")))
-            return
-        }
-        
-        if let data {
+            completion(.failure(.genericError(error)))
+        } else if let data {
             do {
                 let joke = try JSONDecoder().decode(Joke.self, from: data)
                 print("Joke: ", joke)
                 completion(.success(joke))
             } catch {
                 print("Error: ", error)
-                completion(.failure(.unknown("Could not load joke")))
+                completion(.failure(.decodingError("Could not convert Data to Joke")))
             }
+        } else { // No data and no error, and we have to call completion anyway
+            completion(.failure(.unknownError("Could not load joke")))
         }
     }
 }
