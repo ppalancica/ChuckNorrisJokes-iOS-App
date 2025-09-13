@@ -6,8 +6,19 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXContainerItemProxy section */
+		B3C56C0B2E75BD150034ECBA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B3C56BE32E75B28D0034ECBA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B3C56BEA2E75B28D0034ECBA;
+			remoteInfo = "ChuckNorrisJokes-iOS-App";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		B3C56BEB2E75B28D0034ECBA /* ChuckNorrisJokes-iOS-App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ChuckNorrisJokes-iOS-App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B3C56C072E75BD150034ECBA /* ChuckNorrisJokes-iOS-App-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ChuckNorrisJokes-iOS-App-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -29,10 +40,22 @@
 			path = "ChuckNorrisJokes-iOS-App";
 			sourceTree = "<group>";
 		};
+		B3C56C082E75BD150034ECBA /* ChuckNorrisJokes-iOS-App-Tests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "ChuckNorrisJokes-iOS-App-Tests";
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		B3C56BE82E75B28D0034ECBA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B3C56C042E75BD150034ECBA /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -46,6 +69,7 @@
 			isa = PBXGroup;
 			children = (
 				B3C56BED2E75B28D0034ECBA /* ChuckNorrisJokes-iOS-App */,
+				B3C56C082E75BD150034ECBA /* ChuckNorrisJokes-iOS-App-Tests */,
 				B3C56BEC2E75B28D0034ECBA /* Products */,
 			);
 			sourceTree = "<group>";
@@ -54,6 +78,7 @@
 			isa = PBXGroup;
 			children = (
 				B3C56BEB2E75B28D0034ECBA /* ChuckNorrisJokes-iOS-App.app */,
+				B3C56C072E75BD150034ECBA /* ChuckNorrisJokes-iOS-App-Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -83,6 +108,29 @@
 			productReference = B3C56BEB2E75B28D0034ECBA /* ChuckNorrisJokes-iOS-App.app */;
 			productType = "com.apple.product-type.application";
 		};
+		B3C56C062E75BD150034ECBA /* ChuckNorrisJokes-iOS-App-Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B3C56C0D2E75BD150034ECBA /* Build configuration list for PBXNativeTarget "ChuckNorrisJokes-iOS-App-Tests" */;
+			buildPhases = (
+				B3C56C032E75BD150034ECBA /* Sources */,
+				B3C56C042E75BD150034ECBA /* Frameworks */,
+				B3C56C052E75BD150034ECBA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B3C56C0C2E75BD150034ECBA /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				B3C56C082E75BD150034ECBA /* ChuckNorrisJokes-iOS-App-Tests */,
+			);
+			name = "ChuckNorrisJokes-iOS-App-Tests";
+			packageProductDependencies = (
+			);
+			productName = "ChuckNorrisJokes-iOS-App-Tests";
+			productReference = B3C56C072E75BD150034ECBA /* ChuckNorrisJokes-iOS-App-Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -95,6 +143,10 @@
 				TargetAttributes = {
 					B3C56BEA2E75B28D0034ECBA = {
 						CreatedOnToolsVersion = 16.2;
+					};
+					B3C56C062E75BD150034ECBA = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = B3C56BEA2E75B28D0034ECBA;
 					};
 				};
 			};
@@ -113,12 +165,20 @@
 			projectRoot = "";
 			targets = (
 				B3C56BEA2E75B28D0034ECBA /* ChuckNorrisJokes-iOS-App */,
+				B3C56C062E75BD150034ECBA /* ChuckNorrisJokes-iOS-App-Tests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		B3C56BE92E75B28D0034ECBA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B3C56C052E75BD150034ECBA /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -135,7 +195,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B3C56C032E75BD150034ECBA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B3C56C0C2E75BD150034ECBA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B3C56BEA2E75B28D0034ECBA /* ChuckNorrisJokes-iOS-App */;
+			targetProxy = B3C56C0B2E75BD150034ECBA /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		B3C56BFF2E75B28F0034ECBA /* Debug */ = {
@@ -311,6 +386,40 @@
 			};
 			name = Release;
 		};
+		B3C56C0E2E75BD150034ECBA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "io.mobiledeveloper.ChuckNorrisJokes-iOS-App-Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ChuckNorrisJokes-iOS-App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ChuckNorrisJokes-iOS-App";
+			};
+			name = Debug;
+		};
+		B3C56C0F2E75BD150034ECBA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "io.mobiledeveloper.ChuckNorrisJokes-iOS-App-Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ChuckNorrisJokes-iOS-App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ChuckNorrisJokes-iOS-App";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -328,6 +437,15 @@
 			buildConfigurations = (
 				B3C56BFF2E75B28F0034ECBA /* Debug */,
 				B3C56C002E75B28F0034ECBA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B3C56C0D2E75BD150034ECBA /* Build configuration list for PBXNativeTarget "ChuckNorrisJokes-iOS-App-Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B3C56C0E2E75BD150034ECBA /* Debug */,
+				B3C56C0F2E75BD150034ECBA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
