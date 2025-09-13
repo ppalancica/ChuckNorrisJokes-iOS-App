@@ -29,6 +29,9 @@ final class JokeViewController: UIViewController {
     }
     
     required init?(coder: NSCoder) {
+        session = URLSession(configuration: URLSessionConfiguration.default,
+                             delegate: nil,
+                             delegateQueue: nil)
         super.init(coder: coder)
     }
     
@@ -41,33 +44,11 @@ final class JokeViewController: UIViewController {
     @IBAction private func loadJokeTapped() {
         dataTask?.cancel()
         
-        if session == nil {
-            session = URLSession(configuration: URLSessionConfiguration.default,
-                                 delegate: self,
-                                 delegateQueue: nil)
-        }
-        
         let url = URL(string: "https://api.chucknorris.io/jokes/random")!
         let request = URLRequest(url: url)
         
         dataTask = session.dataTask(with: request) { data, response, error in
-            if let error {
-                self.handleCompletion(error: error.localizedDescription, data: nil)
-                return
-            }
-            
-            guard let response = response as? HTTPURLResponse,
-                  (200..<300).contains(response.statusCode) else {
-                self.handleCompletion(error: "Invalid response", data: data)
-                return
-            }
-            
-            guard let data else {
-                self.handleCompletion(error: "Invalid data", data: nil)
-                return
-            }
-            
-            self.handleCompletion(error: nil, data: data)
+            self.handleResponse(data, response, error)
         }
         
         dataTask.resume()
@@ -79,6 +60,28 @@ final class JokeViewController: UIViewController {
 }
 
 private extension JokeViewController {
+    func handleResponse(_ data: Data?,
+                        _ response: URLResponse?,
+                        _ error: Error?) {
+        if let error {
+            self.handleCompletion(error: error.localizedDescription, data: nil)
+            return
+        }
+        
+        guard let response = response as? HTTPURLResponse,
+              (200..<300).contains(response.statusCode) else {
+            self.handleCompletion(error: "Invalid response", data: data)
+            return
+        }
+        
+        guard let data else {
+            self.handleCompletion(error: "Invalid data", data: nil)
+            return
+        }
+        
+        self.handleCompletion(error: nil, data: data)
+    }
+    
     func handleCompletion(error: String?, data: Data?) {
         if let error {
             print("Error: ", error)
