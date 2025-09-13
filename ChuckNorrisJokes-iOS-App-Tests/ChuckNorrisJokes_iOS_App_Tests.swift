@@ -31,6 +31,23 @@ final class ChuckNorrisJokes_iOS_App_Tests: XCTestCase {
         XCTAssertFalse(try sut.textView().text.isEmpty)
     }
     
+    func test_loadJokeTapped_onCancel_doesNotChangeTextViewText() throws {
+        let sut = makeSUT()
+        
+        sut.loadViewIfNeeded()
+        
+        let exp = expectation(description: "Wait for Joke loading to complete")
+        sut.onJokeLoaded = { exp.fulfill() }
+        XCTAssertEqual(try sut.textView().text, "")
+        
+        try sut.loadJokeButton().sendActions(for: .touchUpInside)
+        sut.cancelJokeLoad()
+        
+        wait(for: [exp], timeout: 1.0)
+        
+        XCTAssertTrue(try sut.textView().text.isEmpty)
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT() -> JokeViewController {

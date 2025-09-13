@@ -53,12 +53,19 @@ final class JokeViewController: UIViewController {
         
         dataTask.resume()
     }
+    
+    func cancelJokeLoad() {
+        dataTask?.cancel()
+    }
 }
 
 private extension JokeViewController {
     func handleCompletion(error: String?, data: Data?) {
         if let error {
             print("Error: ", error)
+            DispatchQueue.main.async {
+                self.onJokeLoaded?()
+            }
             return
         }
         
