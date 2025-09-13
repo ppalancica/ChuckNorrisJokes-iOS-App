@@ -53,5 +53,11 @@ final class JokeViewController: UIViewController {
 }
 
 extension JokeViewController: URLSessionDelegate {
-    
+    func urlSession(
+        _ session: URLSession,
+        didReceive challenge: URLAuthenticationChallenge,
+        completionHandler: @escaping @Sendable (URLSession.AuthChallengeDisposition, URLCredential?
+        ) -> Void) {
+        // NOOP
+    }
 }
