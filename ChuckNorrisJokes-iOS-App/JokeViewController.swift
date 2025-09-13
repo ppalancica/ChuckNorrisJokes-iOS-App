@@ -6,13 +6,36 @@ struct Joke: Decodable {
 
 final class RemoteJokeLoader {
     
+    private let session: URLSession
+    private var dataTask: URLSessionDataTask!
+    
+    init(session: URLSession) {
+        self.session = session
+    }
+    
+    typealias LoadJokeCompletion = (Data?, URLResponse?, Error?) -> Void
+    
+    func loadJoke(completion: @escaping LoadJokeCompletion) {
+        dataTask?.cancel()
+        
+        let url = URL(string: "https://api.chucknorris.io/jokes/random")!
+        let request = URLRequest(url: url)
+        
+        dataTask = session.dataTask(with: request) { data, response, error in
+            completion(data, response, error)
+        }
+        
+        dataTask.resume()
+    }
+    
+    func cancelJokeLoad() {
+        dataTask?.cancel()
+    }
 }
 
 final class JokeViewController: UIViewController {
     
-    private var jokeLoader: RemoteJokeLoader!
-    private let session: URLSession!
-    private var dataTask: URLSessionDataTask!
+    private let jokeLoader: RemoteJokeLoader!
     
     var onJokeLoaded: (() -> Void)?
     
@@ -33,14 +56,14 @@ final class JokeViewController: UIViewController {
     
     init?(jokeLoader: RemoteJokeLoader, session: URLSession, coder aDecoder: NSCoder) {
         self.jokeLoader = jokeLoader
-        self.session = session
         super.init(coder: aDecoder)
     }
     
     required init?(coder: NSCoder) {
-        session = URLSession(configuration: URLSessionConfiguration.default,
-                             delegate: nil,
-                             delegateQueue: nil)
+        let session = URLSession(configuration: URLSessionConfiguration.default,
+                                 delegate: nil,
+                                 delegateQueue: nil)
+        jokeLoader = RemoteJokeLoader(session: session)
         super.init(coder: coder)
     }
     
@@ -51,24 +74,12 @@ final class JokeViewController: UIViewController {
     }
     
     @IBAction private func loadJokeTapped() {
-        dataTask?.cancel()
-        
-        let url = URL(string: "https://api.chucknorris.io/jokes/random")!
-        let request = URLRequest(url: url)
-        
-        dataTask = session.dataTask(with: request) { data, response, error in
-            self.handleResponse(data, response, error)
-        }
-        
-        dataTask.resume()
-    }
-    
-    func cancelJokeLoad() {
-        dataTask?.cancel()
+        jokeLoader.loadJoke(completion: handleResponse)
     }
 }
 
 private extension JokeViewController {
+    
     func handleResponse(_ data: Data?,
                         _ response: URLResponse?,
                         _ error: Error?) {
