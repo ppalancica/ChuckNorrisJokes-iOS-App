@@ -13,6 +13,13 @@ final class JokeViewController: UIViewController {
     
     @IBOutlet private weak var jokeTextView: UITextView!
     
+    static func storyboardedJokeVC() -> JokeViewController {
+        let storyboard = UIStoryboard(name: "Main", bundle: .main)
+        let jokeVC = storyboard.instantiateInitialViewController() as! JokeViewController
+        
+        return jokeVC
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         

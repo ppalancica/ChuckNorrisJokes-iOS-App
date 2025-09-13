@@ -51,10 +51,7 @@ final class ChuckNorrisJokes_iOS_App_Tests: XCTestCase {
     // MARK: - Helpers
     
     private func makeSUT() -> JokeViewController {
-        let storyboard = UIStoryboard(name: "Main", bundle: .main)
-        let jokeVC = storyboard.instantiateInitialViewController() as! JokeViewController
-        
-        return jokeVC
+        return JokeViewController.storyboardedJokeVC()
     }
 }
 
