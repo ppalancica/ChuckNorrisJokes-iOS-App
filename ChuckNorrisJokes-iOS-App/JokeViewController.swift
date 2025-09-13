@@ -1,5 +1,9 @@
 import UIKit
 
+struct Joke: Decodable {
+    let value: String
+}
+
 final class JokeViewController: UIViewController {
     
     private var session: URLSession!
@@ -42,16 +46,32 @@ final class JokeViewController: UIViewController {
                 return
             }
             
-            let jsonAsString = String(data: data, encoding: .utf8)
-            
-            print(jsonAsString ?? "Empty")
+            self.handleCompletion(error: nil, data: data)
         }
         
         dataTask.resume()
     }
-    
-    private func handleCompletion(error: String?, data: Data?) {
+}
+
+private extension JokeViewController {
+    func handleCompletion(error: String?, data: Data?) {
+        if let error {
+            print("Error: ", error)
+            return
+        }
         
+        if let data {
+            do {
+                let joke = try JSONDecoder().decode(Joke.self, from: data)
+                print("Joke: ", joke)
+                
+                DispatchQueue.main.async {
+                    self.jokeTextView.text = joke.value
+                }
+            } catch {
+                print("Error: ", error)
+            }
+        }
     }
 }
 
